@@ -2,7 +2,9 @@ package com.ramon.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +26,8 @@ public class Produto implements Serializable {
 	private String nome;
 	private double preco;
 	
+	private Set<ItemPedido> itens = new HashSet<>();
+	
 	@JsonBackReference
 	@ManyToMany
 	@JoinTable(name = "Produto_Categoria",
@@ -42,6 +46,14 @@ public class Produto implements Serializable {
 		this.preco = preco;
 	}
 
+	public List<Pedido> getPedidos(){
+		List<Pedido> lista = new ArrayList<>();
+		for(ItemPedido x : itens) {
+			lista.add(x.getPedido());
+		}
+		return lista;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -70,6 +82,14 @@ public class Produto implements Serializable {
 		return categorias;
 	}
 
+	public Set<ItemPedido> getItems() {
+		return itens;
+	}
+
+	public void setItems(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+	
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
@@ -98,6 +118,8 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
+
+	
 	
 	
 }
