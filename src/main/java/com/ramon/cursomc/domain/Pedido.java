@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -23,6 +24,7 @@ public class Pedido implements Serializable{
 	private Integer id;
 	private Date instante;
 	
+	@OneToMany(mappedBy = "id.pedido")
 	private Set<ItemPedido> items = new HashSet<>();
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
